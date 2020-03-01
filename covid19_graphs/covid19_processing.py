@@ -7,7 +7,7 @@ class Covid19Processing():
     https://github.com/CSSEGISandData/COVID-19/
     """
 
-    def __init__(self):
+    def __init__(self, out_dir):
         logging.debug('Covid19Processing __init__ to be written')  # TODO
         # TODO add instance variables to store the data here
         # TODO decide on how we are going to store
