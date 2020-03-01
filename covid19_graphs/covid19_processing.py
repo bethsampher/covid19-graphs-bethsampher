@@ -8,7 +8,7 @@ class Covid19Processing():
     """
 
     def __init__(self, out_dir):
-        logging.debug('Covid19Processing __init__ to be written')  # TODO
+        self.out_dir = out_dir
         # TODO add instance variables to store the data here
         # TODO decide on how we are going to store
 
