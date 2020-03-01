@@ -38,7 +38,7 @@ def main():
     out_dir = args.out_dir
     logging.debug(f'args namespace: {args}')
     logging.debug(f'will output to directory: {out_dir}')
-    c_process = Covid19Processing()
+    c_process = Covid19Processing(out_dir)
     c_process.download_from_github()
     c_process.process_data()
     c_process.create_out_dir(out_dir)
