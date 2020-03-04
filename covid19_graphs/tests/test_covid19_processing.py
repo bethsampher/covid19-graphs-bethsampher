@@ -26,9 +26,7 @@ def test_process_data():
     test_data = 'State,Country/Region,1/22/20,3/3/20\nAnhui,Mainland China,1,990\nBeijing,Mainland China,14,414\n,UK,0,51'
     processing.data = test_data
     processing.process_data()
-    expected_rows = [[15, 0, 15], [1404, 51, 1455]]
-    expected_col_names = ['China', 'Other', 'Total']
-    expected_row_names = ['1/22/20', '3/3/20']
-    expected_csv_data = pd.DataFrame(data=expected_rows, columns=expected_col_names, index=expected_row_names)
+    expected_data = [[15, 0, 15], [1404, 51, 1455]]
+    expected_csv_data = pd.DataFrame(data=expected_data, columns=['China', 'Other', 'Total'], index=['1/22/20', '3/3/20'])
     assert expected_csv_data.equals(processing.csv_data)
 
