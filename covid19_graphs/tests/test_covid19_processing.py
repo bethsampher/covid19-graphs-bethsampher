@@ -1,6 +1,7 @@
 """ unit tests for covid19_processing """
 
 from mock import patch
+import os
 import pandas as pd
 import pytest
 
@@ -27,6 +28,11 @@ def test_process_data():
     processing.data = test_data
     processing.process_data()
     expected_data = [[15, 0, 15], [1404, 51, 1455]]
-    expected_csv_data = pd.DataFrame(data=expected_data, columns=['China', 'Other', 'Total'], index=['1/22/20', '3/3/20'])
+    expected_csv_data = pd.DataFrame(expected_data, columns=['China', 'Other', 'Total'], index=['1/22/20', '3/3/20'])
     assert expected_csv_data.equals(processing.csv_data)
 
+def test_create_out_dir():
+    processing = Covid19Processing('test_dir')
+    processing.create_out_dir()
+    assert os.path.exists('test_dir')
+    os.rmdir('test_dir')
