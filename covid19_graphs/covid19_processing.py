@@ -1,5 +1,7 @@
 """module for Covid19Processing class"""
 import logging
+import pandas as pd
+from io import StringIO
 import requests
 
 
@@ -28,7 +30,12 @@ class Covid19Processing():
 
     def process_data(self):
         """processes the stored data into a form for CSV files"""
-        logging.debug('process_data to be written')  # TODO
+        all_data = pd.read_csv(StringIO(self.data))
+        china = all_data.loc[all_data['Country/Region'] == 'Mainland China', '1/22/20':].sum().rename('China')
+        other = all_data.loc[all_data['Country/Region'] != 'Mainland China', '1/22/20':].sum().rename('Other')
+        csv_data = pd.concat([china, other], axis=1)
+        csv_data['Total'] = csv_data.sum(axis=1)
+        self.csv_data = csv_data
 
     def create_out_dir(self, out_dir):
         """creates a new output directory out_dir
