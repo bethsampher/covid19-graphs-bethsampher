@@ -1,8 +1,10 @@
 """module for Covid19Processing class"""
 import logging
+import os
 import pandas as pd
 from io import StringIO
 import requests
+import sys
 
 
 class Covid19Processing():
@@ -37,12 +39,12 @@ class Covid19Processing():
         csv_data['Total'] = csv_data.sum(axis=1)
         self.csv_data = csv_data
 
-    def create_out_dir(self, out_dir):
+    def create_out_dir(self):
         """creates a new output directory out_dir
 
         This will be used for all files to be written"""
         # TODO decide on what happens if the directory already exists!
-        logging.debug(f'create_out_dir to be written, {out_dir}')  # TODO
+        os.mkdir(self.out_dir)
 
     def write_csv_files(self, out_dir):
         """writes CSV files to out_dir"""
