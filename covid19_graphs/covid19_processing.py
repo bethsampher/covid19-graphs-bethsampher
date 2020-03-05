@@ -46,6 +46,7 @@ class Covid19Processing():
         # TODO decide on what happens if the directory already exists!
         os.mkdir(self.out_dir)
 
-    def write_csv_files(self, out_dir):
+    def write_csv_files(self):
         """writes CSV files to out_dir"""
-        logging.debug(f'write_csv_files to be written, {out_dir}')  # TODO
+        output_path = self.out_dir + '/cases.csv'
+        self.csv_data.to_csv(output_path)
