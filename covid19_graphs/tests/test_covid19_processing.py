@@ -33,13 +33,13 @@ def test_process_data():
 
 def test_create_out_dir():
     processing = Covid19Processing('test_dir')
-    processing.create_out_dir()
-    assert os.path.exists('test_dir')
-    os.rmdir('test_dir')
+    with patch('os.mkdir') as mock_mkdir:
+        processing.create_out_dir()
+        mock_mkdir.assert_called_once_with('test_dir')
 
 def test_write_csv_files():
     processing = Covid19Processing('test_dir')
     with patch('pandas.DataFrame.to_csv') as mock_to_csv:
         processing.csv_data = pd.DataFrame(['test data'])
         processing.write_csv_files()
-        mock_to_csv.assert_called_with('test_dir/cases.csv')
+        mock_to_csv.assert_called_once_with('test_dir/cases.csv')
