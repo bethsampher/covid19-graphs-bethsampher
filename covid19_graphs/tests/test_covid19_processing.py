@@ -49,6 +49,10 @@ def test_create_out_dir():
 def test_write_csv_files():
     processing = Covid19Processing('test_dir')
     with patch('pandas.DataFrame.to_csv') as mock_to_csv:
-        processing.csv_data = pd.DataFrame(['test data'])
+        processing.cases_csv_data = pd.DataFrame(['test data'])
+        processing.deaths_csv_data = pd.DataFrame(['test data'])
+        processing.recovered_csv_data = pd.DataFrame(['test data'])
         processing.write_csv_files()
-        mock_to_csv.assert_called_once_with('test_dir/cases.csv')
+        mock_to_csv.assert_any_call('test_dir/cases.csv')
+        mock_to_csv.assert_any_call('test_dir/deaths.csv')
+        mock_to_csv.assert_any_call('test_dir/recovered.csv')
