@@ -12,9 +12,17 @@ class Covid19Processing():
     https://github.com/CSSEGISandData/COVID-19/
     """
 
-    data_url = ('https://raw.githubusercontent.com/CSSEGISandData/'
+    cases_url = ('https://raw.githubusercontent.com/CSSEGISandData/'
                 'COVID-19/master/csse_covid_19_data/'
                 'csse_covid_19_time_series/time_series_19-covid-Confirmed.csv')
+
+    deaths_url = ('https://raw.githubusercontent.com/CSSEGISandData/COVID-19/'
+                  'master/csse_covid_19_data/csse_covid_19_time_series/'
+                  'time_series_19-covid-Deaths.csv')
+
+    recovered_url = ('https://raw.githubusercontent.com/CSSEGISandData/COVID-19/'
+                     'master/csse_covid_19_data/csse_covid_19_time_series/'
+                     'time_series_19-covid-Recovered.csv')
 
     def __init__(self, out_dir):
         self.out_dir = out_dir
@@ -25,10 +33,12 @@ class Covid19Processing():
         """downloads the datasets from the COVID19 github repo
         into instance variable storage
         """
-        response = requests.get(self.data_url)
-        self.status_code = response.status_code
-        self.data = response.text
-        return self.status_code
+        cases_response = requests.get(self.cases_url)
+        self.cases_data = cases_response.text
+        deaths_response = requests.get(self.deaths_url)
+        self.deaths_data = deaths_response.text
+        recovered_response = requests.get(self.recovered_url)
+        self.recovered_data = recovered_response.text
 
     def process_data(self):
         """processes the stored data into a form for CSV files"""
