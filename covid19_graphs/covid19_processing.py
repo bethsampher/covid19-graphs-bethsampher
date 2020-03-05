@@ -40,14 +40,20 @@ class Covid19Processing():
         recovered_response = requests.get(self.recovered_url)
         self.recovered_data = recovered_response.text
 
-    def process_data(self):
-        """processes the stored data into a form for CSV files"""
-        all_data = pd.read_csv(StringIO(self.data))
+    def filter_data(self, data):
+        # TODO write docstring
+        all_data = pd.read_csv(StringIO(data))
         china = all_data.loc[all_data['Country/Region'] == 'Mainland China', '1/22/20':].sum().rename('China')
         other = all_data.loc[all_data['Country/Region'] != 'Mainland China', '1/22/20':].sum().rename('Other')
         csv_data = pd.concat([china, other], axis=1)
         csv_data['Total'] = csv_data.sum(axis=1)
-        self.csv_data = csv_data
+        return csv_data
+
+    def process_data(self):
+        """processes the stored data into a form for CSV files"""
+        self.cases_csv_data = self.filter_data(self.cases_data)
+        self.deaths_csv_data = self.filter_data(self.deaths_data)
+        self.recovered_csv_data = self.filter_data(self.recovered_data)
 
     def create_out_dir(self):
         """creates a new output directory out_dir
