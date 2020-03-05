@@ -17,10 +17,10 @@ def test_download_from_github():
     with patch('requests.get') as mock_get:
         mock_get.return_value.text = 'Test info'
         mock_get.return_value.status_code = 200
-        response = processing.download_from_github()
-        assert response == 200
-        assert processing.data == 'Test info'
-        assert processing.status_code == 200
+        processing.download_from_github()
+        assert processing.cases_data == 'Test info'
+        assert processing.deaths_data == 'Test info'
+        assert processing.recovered_data == 'Test info'
 
 def test_process_data():
     processing = Covid19Processing('test_dir')
