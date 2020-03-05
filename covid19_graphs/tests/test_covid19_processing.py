@@ -13,10 +13,10 @@ def test_out_dir():
     assert processing_with_dir.out_dir == 'test_dir'
 
 def test_download_from_github():
+    processing = Covid19Processing('test_dir')
     with patch('requests.get') as mock_get:
         mock_get.return_value.text = 'Test info'
         mock_get.return_value.status_code = 200
-        processing = Covid19Processing('test_dir')
         response = processing.download_from_github()
         assert response == 200
         assert processing.data == 'Test info'
@@ -36,3 +36,10 @@ def test_create_out_dir():
     processing.create_out_dir()
     assert os.path.exists('test_dir')
     os.rmdir('test_dir')
+
+def test_write_csv_files():
+    processing = Covid19Processing('test_dir')
+    with patch('pandas.DataFrame.to_csv') as mock_to_csv:
+        processing.csv_data = pd.DataFrame(['test data'])
+        processing.write_csv_files()
+        mock_to_csv.assert_called_with('test_dir/cases.csv')
