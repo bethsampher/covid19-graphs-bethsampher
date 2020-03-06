@@ -1,5 +1,10 @@
 """module for Covid19Processing class"""
 import logging
+import os
+import pandas as pd
+from io import StringIO
+import requests
+import sys
 
 
 class Covid19Processing():
@@ -7,8 +12,20 @@ class Covid19Processing():
     https://github.com/CSSEGISandData/COVID-19/
     """
 
-    def __init__(self):
-        logging.debug('Covid19Processing __init__ to be written')  # TODO
+    cases_url = ('https://raw.githubusercontent.com/CSSEGISandData/'
+                'COVID-19/master/csse_covid_19_data/'
+                'csse_covid_19_time_series/time_series_19-covid-Confirmed.csv')
+
+    deaths_url = ('https://raw.githubusercontent.com/CSSEGISandData/COVID-19/'
+                  'master/csse_covid_19_data/csse_covid_19_time_series/'
+                  'time_series_19-covid-Deaths.csv')
+
+    recovered_url = ('https://raw.githubusercontent.com/CSSEGISandData/COVID-19/'
+                     'master/csse_covid_19_data/csse_covid_19_time_series/'
+                     'time_series_19-covid-Recovered.csv')
+
+    def __init__(self, out_dir):
+        self.out_dir = out_dir
         # TODO add instance variables to store the data here
         # TODO decide on how we are going to store
 
@@ -16,20 +33,40 @@ class Covid19Processing():
         """downloads the datasets from the COVID19 github repo
         into instance variable storage
         """
-        logging.debug('download_from_github to be written')  # TODO
-        # TODO use requests to download the datasets
+        cases_response = requests.get(self.cases_url)
+        self.cases_data = cases_response.text
+        deaths_response = requests.get(self.deaths_url)
+        self.deaths_data = deaths_response.text
+        recovered_response = requests.get(self.recovered_url)
+        self.recovered_data = recovered_response.text
+
+    def filter_data(self, data):
+        # TODO write docstring
+        all_data = pd.read_csv(StringIO(data))
+        china = all_data.loc[all_data['Country/Region'] == 'Mainland China', '1/22/20':].sum().rename('China')
+        other = all_data.loc[all_data['Country/Region'] != 'Mainland China', '1/22/20':].sum().rename('Other')
+        csv_data = pd.concat([china, other], axis=1)
+        csv_data['Total'] = csv_data.sum(axis=1)
+        return csv_data
 
     def process_data(self):
         """processes the stored data into a form for CSV files"""
-        logging.debug('process_data to be written')  # TODO
+        self.cases_csv_data = self.filter_data(self.cases_data)
+        self.deaths_csv_data = self.filter_data(self.deaths_data)
+        self.recovered_csv_data = self.filter_data(self.recovered_data)
 
-    def create_out_dir(self, out_dir):
+    def create_out_dir(self):
         """creates a new output directory out_dir
 
         This will be used for all files to be written"""
         # TODO decide on what happens if the directory already exists!
-        logging.debug(f'create_out_dir to be written, {out_dir}')  # TODO
+        os.mkdir(self.out_dir)
 
-    def write_csv_files(self, out_dir):
+    def write_csv_files(self):
         """writes CSV files to out_dir"""
-        logging.debug(f'write_csv_files to be written, {out_dir}')  # TODO
+        cases_path = self.out_dir + '/cases.csv'
+        self.cases_csv_data.to_csv(cases_path)
+        deaths_path = self.out_dir + '/deaths.csv'
+        self.deaths_csv_data.to_csv(deaths_path)
+        recovered_path = self.out_dir + '/recovered.csv'
+        self.recovered_csv_data.to_csv(recovered_path)
