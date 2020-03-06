@@ -64,5 +64,9 @@ class Covid19Processing():
 
     def write_csv_files(self):
         """writes CSV files to out_dir"""
-        output_path = self.out_dir + '/cases.csv'
-        self.csv_data.to_csv(output_path)
+        cases_path = self.out_dir + '/cases.csv'
+        self.cases_csv_data.to_csv(cases_path)
+        deaths_path = self.out_dir + '/deaths.csv'
+        self.deaths_csv_data.to_csv(deaths_path)
+        recovered_path = self.out_dir + '/recovered.csv'
+        self.recovered_csv_data.to_csv(recovered_path)
