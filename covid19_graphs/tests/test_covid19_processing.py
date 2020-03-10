@@ -9,8 +9,8 @@ from covid19_graphs.covid19_processing import Covid19Processing
 
 
 def test_out_dir():
-    processing_with_dir = Covid19Processing('test_dir')
-    assert processing_with_dir.out_dir == 'test_dir'
+    processing = Covid19Processing('test_dir')
+    assert processing.out_dir == 'test_dir'
 
 def test_download_from_github():
     processing = Covid19Processing('test_dir')
@@ -39,6 +39,8 @@ def test_process_data():
         processing.recovered_data = 'Test data'
         processing.process_data()
         assert processing.cases_csv_data == 'Test CSV data'
+        assert processing.deaths_csv_data == 'Test CSV data'
+        assert processing.recovered_csv_data == 'Test CSV data'
 
 def test_create_out_dir():
     processing = Covid19Processing('test_dir')
