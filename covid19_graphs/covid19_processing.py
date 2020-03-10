@@ -25,9 +25,10 @@ class Covid19Processing():
                      'time_series_19-covid-Recovered.csv')
 
     def __init__(self, out_dir):
-        self.out_dir = out_dir
-        # TODO add instance variables to store the data here
-        # TODO decide on how we are going to store
+        if os.path.exists(out_dir):
+            sys.exit('Error! Specified output directory already exists')
+        else:
+            self.out_dir = out_dir
 
     def download_from_github(self):
         """downloads the datasets from the COVID19 github repo
@@ -59,7 +60,6 @@ class Covid19Processing():
         """creates a new output directory out_dir
 
         This will be used for all files to be written"""
-        # TODO decide on what happens if the directory already exists!
         os.mkdir(self.out_dir)
 
     def write_csv_files(self):
