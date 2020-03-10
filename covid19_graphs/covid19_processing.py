@@ -35,10 +35,13 @@ class Covid19Processing():
         into instance variable storage
         """
         cases_response = requests.get(self.cases_url)
-        self.cases_data = cases_response.text
         deaths_response = requests.get(self.deaths_url)
-        self.deaths_data = deaths_response.text
         recovered_response = requests.get(self.recovered_url)
+        for response in (cases_response, deaths_response, recovered_response):
+            if response.status_code != 200:
+                sys.exit('Error! Data could not be retrieved')
+        self.cases_data = cases_response.text
+        self.deaths_data = deaths_response.text
         self.recovered_data = recovered_response.text
 
     def filter_data(self, data):
