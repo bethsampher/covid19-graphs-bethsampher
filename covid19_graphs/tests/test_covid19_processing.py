@@ -12,6 +12,12 @@ def test_out_dir():
     processing = Covid19Processing('test_dir')
     assert processing.out_dir == 'test_dir'
 
+def test_existing_out_dir():
+    with patch('os.path.exists') as mock_exists:
+        mock_exists.return_value = True
+        with pytest.raises(SystemExit):
+            processing = Covid19Processing('test_dir')
+
 def test_download_from_github():
     processing = Covid19Processing('test_dir')
     with patch('requests.get') as mock_get:
