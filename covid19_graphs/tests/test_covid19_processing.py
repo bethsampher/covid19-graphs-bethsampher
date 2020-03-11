@@ -55,6 +55,16 @@ def test_process_data():
         assert processing.deaths_csv_data == 'Test CSV data'
         assert processing.recovered_csv_data == 'Test CSV data'
 
+def test_process_data_fail():
+    processing = Covid19Processing('test_dir')
+    with patch ('covid19_graphs.covid19_processing.Covid19Processing.filter_data') as mock_filter:
+        mock_filter.side_effect = Exception
+        processing.cases_data = 'Test data'
+        processing.deaths_data = 'Test data'
+        processing.recovered_data = 'Test data'
+        with pytest.raises(SystemExit):
+            processing.process_data()
+
 def test_create_out_dir():
     processing = Covid19Processing('test_dir')
     with patch('os.mkdir') as mock_mkdir:
