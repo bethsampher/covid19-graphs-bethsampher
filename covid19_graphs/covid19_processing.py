@@ -55,9 +55,12 @@ class Covid19Processing():
 
     def process_data(self):
         """processes the stored data into a form for CSV files"""
-        self.cases_csv_data = self.filter_data(self.cases_data)
-        self.deaths_csv_data = self.filter_data(self.deaths_data)
-        self.recovered_csv_data = self.filter_data(self.recovered_data)
+        try:
+            self.cases_csv_data = self.filter_data(self.cases_data)
+            self.deaths_csv_data = self.filter_data(self.deaths_data)
+            self.recovered_csv_data = self.filter_data(self.recovered_data)
+        except:
+            sys.exit('Error! Data could not be processed')
 
     def create_out_dir(self):
         """creates a new output directory out_dir
