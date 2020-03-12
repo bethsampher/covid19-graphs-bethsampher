@@ -1,3 +1,5 @@
+![Python application](https://github.com/ARU-Bioinf-ISE/covid19-graphs-bethsampher/workflows/Python%20application/badge.svg)
+
 # A tool to download and plot Covid-19 disease outbreak data
 
 Please see [README_instructions.md](README_instructions.md)
