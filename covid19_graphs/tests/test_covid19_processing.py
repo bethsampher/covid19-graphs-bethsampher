@@ -37,10 +37,11 @@ def test_failed_download_from_github():
 
 def test_filter_data():
     processing = Covid19Processing('test_dir')
-    test_data = 'State,Country/Region,1/22/20,3/3/20\nAnhui,Mainland China,1,990\nBeijing,Mainland China,14,414\n,UK,0,51'
+    test_data = 'State,Country/Region,1/22/20,3/3/20\nAnhui,China,1,990\nBeijing,China,14,414\n,United Kingdom,0,51\n,Italy,0,2502\n,Germany,0,196\n,Unknown,10,20'
     csv_data = processing.filter_data(test_data)
-    expected_data = [[15, 0, 15], [1404, 51, 1455]]
-    expected_csv_data = pd.DataFrame(expected_data, columns=['China', 'Other', 'Total'], index=['1/22/20', '3/3/20'])
+    expected_data = [[15, 0, 0, 0, 0, 0, 0, 0, 0, 10, 25], [1404, 0, 51, 0, 2698, 0, 0, 0, 0, 20, 4173]]
+    expected_cols = ['China', 'Diamond Princess', 'UK', 'Asia', 'Europe', 'North America', 'South America', 'Africa', 'Oceania', 'Unrecognised', 'Total']
+    expected_csv_data = pd.DataFrame(expected_data, columns=expected_cols, index=['1/22/20', '3/3/20'])
     assert expected_csv_data.equals(csv_data)
 
 def test_process_data():
