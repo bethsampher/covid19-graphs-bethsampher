@@ -35,6 +35,13 @@ def test_failed_download_from_github():
         with pytest.raises(SystemExit):
             processing.download_from_github()
 
+def test_get_continent():
+    processing = Covid19Processing('test_dir')
+    assert processing.get_continent(pd.Series({'Country/Region' : 'China'})) == ''
+    assert processing.get_continent(pd.Series({'Country/Region' : 'US'})) == 'NA'
+    assert processing.get_continent(pd.Series({'Country/Region' : 'Italy'})) == 'EU'
+    assert processing.get_continent(pd.Series({'Country/Region' : 'Unknown'})) == 'Unrecognised'
+
 def test_filter_data():
     processing = Covid19Processing('test_dir')
     test_data = 'State,Country/Region,1/22/20,3/3/20\nAnhui,China,1,990\nBeijing,China,14,414\n,United Kingdom,0,51\n,Italy,0,2502\n,Germany,0,196\n,Unknown,10,20'
