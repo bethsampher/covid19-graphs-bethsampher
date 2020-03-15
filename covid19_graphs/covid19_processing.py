@@ -144,3 +144,30 @@ class Covid19Processing():
         self.deaths_csv_data.to_csv(deaths_path)
         recovered_path = self.out_dir + '/recovered.csv'
         self.recovered_csv_data.to_csv(recovered_path)
+
+    @staticmethod
+    def set_labels(axes):
+        """Sets axes labels for graphs"""
+        axes.set_xlabel('Date')
+        axes.set_ylabel('Reported number')
+
+    def plot_graphs(self):
+        cases_axes = self.cases_csv_data.plot(
+            legend=True, title='COVID-19 cases (data from John Hopkins CSSE)',
+            grid=True)
+        self.set_labels(cases_axes)
+        cases_path = self.out_dir + '/cases.png'
+        cases_axes.get_figure().savefig(cases_path)
+        deaths_axes = self.deaths_csv_data.plot(
+            legend=True, title='COVID-19 deaths (data from John Hopkins CSSE)',
+            grid=True)
+        self.set_labels(deaths_axes)
+        deaths_path = self.out_dir + '/deaths.png'
+        deaths_axes.get_figure().savefig(deaths_path)
+        recovered_axes = self.recovered_csv_data.plot(
+            legend=True,
+            title='COVID-19 recoveries (data from John Hopkins CSSE)',
+            grid=True)
+        self.set_labels(recovered_axes)
+        recovered_path = self.out_dir + '/recovered.png'
+        recovered_axes.get_figure().savefig(recovered_path)

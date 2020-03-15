@@ -42,3 +42,4 @@ def main():
     c_process.store_data_for_csv()
     c_process.create_out_dir()
     c_process.write_csv_files()
+    c_process.plot_graphs()
