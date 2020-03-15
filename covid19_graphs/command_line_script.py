@@ -8,8 +8,7 @@ def parse_command_line_args(test_override=None):
     """Parse options returning the args namespace
 
     Sets up the command line using argparse including the help message.
-    Here a single sequence string is required for output directory is
-    required.
+    Here, a single sequence string for output directory is required.
 
     test_override is an optional list of arguments (this is for testing).
 
@@ -36,10 +35,10 @@ def main():
                             format='debug %(message)s')
     print(__doc__)
     out_dir = args.out_dir
-    logging.debug(f'args namespace: {args}')
-    logging.debug(f'will output to directory: {out_dir}')
+    logging.debug('args namespace: %s', args)
+    logging.debug('will output to directory: %s', out_dir)
     c_process = Covid19Processing(out_dir)
     c_process.download_from_github()
-    c_process.process_data()
+    c_process.store_data_for_csv()
     c_process.create_out_dir()
     c_process.write_csv_files()

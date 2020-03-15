@@ -4,12 +4,13 @@ from covid19_graphs.command_line_script import parse_command_line_args
 
 
 def test_supply_output_dir():
+    """Tests supplied out_dir is set"""
     args = parse_command_line_args(test_override=['output_dir'])
     assert args.out_dir == 'output_dir'
 
 
 def script_help_message(capsys):
-    """ gets the script's -h help message"""
+    """Gets the script's -h help message"""
     with pytest.raises(SystemExit):
         parse_command_line_args(test_override=['-h'])
     return capsys.readouterr().out
@@ -32,5 +33,6 @@ def test_with_invalid_option_raises_error():
 
 
 def test_supply_2_strings_raises_error():
+    """User passes 2 strings"""
     with pytest.raises(SystemExit):
         parse_command_line_args(test_override=['1', '2'])
