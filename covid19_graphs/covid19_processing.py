@@ -41,6 +41,9 @@ class Covid19Processing():
         self.cases_csv_data = None
         self.deaths_csv_data = None
         self.recovered_csv_data = None
+        self.cases_axes = None
+        self.deaths_axes = None
+        self.recovered_axes = None
 
     def download_from_github(self):
         """Downloads the datasets from the COVID19 GitHub repo
@@ -151,23 +154,28 @@ class Covid19Processing():
         axes.set_xlabel('Date')
         axes.set_ylabel('Reported number')
 
-    def plot_graphs(self):
-        cases_axes = self.cases_csv_data.plot(
+    def make_axes(self):
+        """Creates graphs from cases, deaths and
+        recovered data"""
+        self.cases_axes = self.cases_csv_data.plot(
             legend=True, title='COVID-19 cases (data from John Hopkins CSSE)',
             grid=True)
-        self.set_labels(cases_axes)
-        cases_path = self.out_dir + '/cases.png'
-        cases_axes.get_figure().savefig(cases_path)
-        deaths_axes = self.deaths_csv_data.plot(
+        self.set_labels(self.cases_axes)
+        self.deaths_axes = self.deaths_csv_data.plot(
             legend=True, title='COVID-19 deaths (data from John Hopkins CSSE)',
             grid=True)
-        self.set_labels(deaths_axes)
-        deaths_path = self.out_dir + '/deaths.png'
-        deaths_axes.get_figure().savefig(deaths_path)
-        recovered_axes = self.recovered_csv_data.plot(
+        self.set_labels(self.deaths_axes)
+        self.recovered_axes = self.recovered_csv_data.plot(
             legend=True,
             title='COVID-19 recoveries (data from John Hopkins CSSE)',
             grid=True)
-        self.set_labels(recovered_axes)
+        self.set_labels(self.recovered_axes)
+
+    def write_png_files(self):
+        """Saves graphs to png files"""
+        cases_path = self.out_dir + '/cases.png'
+        self.cases_axes.get_figure().savefig(cases_path)
+        deaths_path = self.out_dir + '/deaths.png'
+        self.deaths_axes.get_figure().savefig(deaths_path)
         recovered_path = self.out_dir + '/recovered.png'
-        recovered_axes.get_figure().savefig(recovered_path)
+        self.recovered_axes.get_figure().savefig(recovered_path)
