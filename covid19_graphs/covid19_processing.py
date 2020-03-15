@@ -1,10 +1,10 @@
 """module for Covid19Processing class"""
-import logging
 import os
-import pandas as pd
-from io import StringIO
-import requests
 import sys
+from io import StringIO
+import pandas as pd
+import pycountry_convert as pc
+import requests
 
 
 class Covid19Processing():
@@ -13,15 +13,17 @@ class Covid19Processing():
     """
 
     cases_url = ('https://raw.githubusercontent.com/CSSEGISandData/'
-                'COVID-19/master/csse_covid_19_data/'
-                'csse_covid_19_time_series/time_series_19-covid-Confirmed.csv')
+                 'COVID-19/master/csse_covid_19_data/'
+                 'csse_covid_19_time_series/'
+                 'time_series_19-covid-Confirmed.csv')
 
     deaths_url = ('https://raw.githubusercontent.com/CSSEGISandData/COVID-19/'
                   'master/csse_covid_19_data/csse_covid_19_time_series/'
                   'time_series_19-covid-Deaths.csv')
 
-    recovered_url = ('https://raw.githubusercontent.com/CSSEGISandData/COVID-19/'
-                     'master/csse_covid_19_data/csse_covid_19_time_series/'
+    recovered_url = ('https://raw.githubusercontent.com/'
+                     'CSSEGISandData/COVID-19/master/'
+                     'csse_covid_19_data/csse_covid_19_time_series/'
                      'time_series_19-covid-Recovered.csv')
 
     def __init__(self, out_dir):
@@ -44,12 +46,50 @@ class Covid19Processing():
         self.deaths_data = deaths_response.text
         self.recovered_data = recovered_response.text
 
+    def get_continent(self, row):
+        # TODO write docstring
+        if row['Country/Region'] in ('China', 'United Kingdom', 'Cruise Ship'):
+            return ''
+        try:
+            if row['Country/Region'] == 'US':
+                country_code = 'US'
+            else:
+                country_code = pc.country_name_to_country_alpha2(
+                    row['Country/Region'])
+            continent = pc.country_alpha2_to_continent_code(country_code)
+            return continent
+        except KeyError:
+            return 'Unrecognised'
+
     def filter_data(self, data):
         # TODO write docstring
         all_data = pd.read_csv(StringIO(data))
-        china = all_data.loc[all_data['Country/Region'] == 'Mainland China', '1/22/20':].sum().rename('China')
-        other = all_data.loc[all_data['Country/Region'] != 'Mainland China', '1/22/20':].sum().rename('Other')
-        csv_data = pd.concat([china, other], axis=1)
+        all_data.insert(2, 'Continent', all_data.apply(
+            self.get_continent, axis=1))
+        china = all_data.loc[all_data['Country/Region'] == 'China',
+                             '1/22/20':].sum().rename('China')
+        diamond_princess = all_data.loc[
+            all_data['Country/Region'] == 'Cruise Ship',
+            '1/22/20':].sum().rename('Diamond Princess')
+        uk = all_data.loc[all_data['Country/Region'] == 'United Kingdom',
+                          '1/22/20':].sum().rename('UK')
+        asia = all_data.loc[all_data['Continent'] == 'AS',
+                            '1/22/20':].sum().rename('Asia')
+        europe = all_data.loc[all_data['Continent'] == 'EU',
+                              '1/22/20':].sum().rename('Europe')
+        north_america = all_data.loc[all_data['Continent'] == 'NA',
+                                     '1/22/20':].sum().rename('North America')
+        south_america = all_data.loc[all_data['Continent'] == 'SA',
+                                     '1/22/20':].sum().rename('South America')
+        africa = all_data.loc[all_data['Continent'] == 'AF',
+                              '1/22/20':].sum().rename('Africa')
+        oceania = all_data.loc[all_data['Continent'] == 'OC',
+                               '1/22/20':].sum().rename('Oceania')
+        unrecognised = all_data.loc[all_data['Continent'] == 'Unrecognised',
+                                    '1/22/20':].sum().rename('Unrecognised')
+        csv_data = pd.concat([china, diamond_princess, uk, asia, europe,
+                              north_america, south_america, africa, oceania,
+                              unrecognised], axis=1)
         csv_data['Total'] = csv_data.sum(axis=1)
         return csv_data
 
@@ -59,7 +99,7 @@ class Covid19Processing():
             self.cases_csv_data = self.filter_data(self.cases_data)
             self.deaths_csv_data = self.filter_data(self.deaths_data)
             self.recovered_csv_data = self.filter_data(self.recovered_data)
-        except:
+        except Exception:
             sys.exit('Error! Data could not be processed')
 
     def create_out_dir(self):
