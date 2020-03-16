@@ -71,7 +71,7 @@ Output graphs (found in the graphs directory within the specified output directo
 
 ## Testing
 
-Command line is tested in [tests/test_parse_command_line_args.py] (https://github.com/ARU-Bioinf-ISE/covid19-graphs-bethsampher/blob/master/covid19_graphs/tests/test_parse_command_line_args.py) and most methods in covid19_processing.py are tested in [tests/test_covid19_processing.py](https://github.com/ARU-Bioinf-ISE/covid19-graphs-bethsampher/blob/master/covid19_graphs/tests/test_covid19_processing.py):
+Command line is tested in [tests/test_parse_command_line_args.py](https://github.com/ARU-Bioinf-ISE/covid19-graphs-bethsampher/blob/master/covid19_graphs/tests/test_parse_command_line_args.py) and most methods in covid19_processing.py are tested in [tests/test_covid19_processing.py](https://github.com/ARU-Bioinf-ISE/covid19-graphs-bethsampher/blob/master/covid19_graphs/tests/test_covid19_processing.py):
 
 ```
 $ pytest -v
@@ -107,7 +107,4 @@ For set_labels, make_axes and write_png_files, I took a more manual approach by 
 ```
 $ covid19_processing -g out
 ```
-I then opened the png files and checked the graphs look correct, which they do here:
-![Cases graph](https://github.com/ARU-Bioinf-ISE/covid19-graphs-bethsampher/blob/master/out/graphs/2020-03-16-cases.png)
-![Deaths graph](https://github.com/ARU-Bioinf-ISE/covid19-graphs-bethsampher/blob/master/out/graphs/2020-03-16-deaths.png)
-![Recovered graph](https://github.com/ARU-Bioinf-ISE/covid19-graphs-bethsampher/blob/master/out/graphs/2020-03-16-recovered.png)
+I then opened the png files and checked the graphs look correct, which they do as can be seen in the images above.
