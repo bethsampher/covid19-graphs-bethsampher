@@ -1,4 +1,5 @@
 """module for Covid19Processing class"""
+import datetime
 import os
 import sys
 from io import StringIO
@@ -181,11 +182,14 @@ class Covid19Processing():
             grid=True)
         self.set_labels(self.recovered_axes)
 
+    def create_graph_dir(self):
+        os.mkdir(self.out_dir + '/graphs')
+
     def write_png_files(self):
         """Saves graphs to png files"""
-        cases_path = self.out_dir + '/cases.png'
+        cases_path = self.out_dir + '/graphs/cases.png'
         self.cases_axes.get_figure().savefig(cases_path)
-        deaths_path = self.out_dir + '/deaths.png'
+        deaths_path = self.out_dir + '/graphs/deaths.png'
         self.deaths_axes.get_figure().savefig(deaths_path)
-        recovered_path = self.out_dir + '/recovered.png'
+        recovered_path = self.out_dir + '/graphs/recovered.png'
         self.recovered_axes.get_figure().savefig(recovered_path)

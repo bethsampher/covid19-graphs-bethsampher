@@ -47,4 +47,5 @@ def main():
     if args.graphs:
         c_process.remove_unrecognised_column()
         c_process.make_axes()
+        c_process.create_graph_dir()
         c_process.write_png_files()
