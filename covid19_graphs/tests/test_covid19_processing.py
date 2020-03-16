@@ -136,3 +136,11 @@ def test_remove_unrecongnised_column():
         processing.deaths_csv_data)
     assert pd.DataFrame({'Test': ['data']}).equals(
         processing.recovered_csv_data)
+
+
+def test_create_graph_dir():
+    """Tests create_graph_dir"""
+    processing = Covid19Processing('test_dir')
+    with patch('os.mkdir') as mock_mkdir:
+        processing.create_graph_dir()
+        mock_mkdir.assert_called_once_with('test_dir/graphs')
