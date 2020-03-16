@@ -51,14 +51,14 @@ Output CSVs produced by running the script on 16/03/20 (data for the 16th was no
 ```
 $ covid19_graphs -g out
 ```
-* cases
-* deaths
-* recovered  
+* [out/cases.csv](https://github.com/ARU-Bioinf-ISE/covid19-graphs-bethsampher/blob/master/out/cases.csv)
+* [out/deaths.csv](https://github.com/ARU-Bioinf-ISE/covid19-graphs-bethsampher/blob/master/out/deaths.csv)
+* [out/recovered.csv](https://github.com/ARU-Bioinf-ISE/covid19-graphs-bethsampher/blob/master/out/recovered.csv)   
 
 Output graphs (found in the graphs directory within the specified output directory):
-* cases
-* deaths
-* recovered  
+* [out/graphs/cases.png](https://github.com/ARU-Bioinf-ISE/covid19-graphs-bethsampher/blob/master/out/graphs/2020-03-16-cases.png)
+* [out/graphs/deaths.png](https://github.com/ARU-Bioinf-ISE/covid19-graphs-bethsampher/blob/master/out/graphs/2020-03-16-deaths.png)
+* [out/graphs/recovered.png](https://github.com/ARU-Bioinf-ISE/covid19-graphs-bethsampher/blob/master/out/graphs/2020-03-16-recovered.png)
 
 ## Advanced features
 
