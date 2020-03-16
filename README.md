@@ -56,9 +56,12 @@ $ covid19_graphs -g out
 * [out/recovered.csv](https://github.com/ARU-Bioinf-ISE/covid19-graphs-bethsampher/blob/master/out/recovered.csv)   
 
 Output graphs (found in the graphs directory within the specified output directory):
-* [out/graphs/cases.png](https://github.com/ARU-Bioinf-ISE/covid19-graphs-bethsampher/blob/master/out/graphs/2020-03-16-cases.png)
-* [out/graphs/deaths.png](https://github.com/ARU-Bioinf-ISE/covid19-graphs-bethsampher/blob/master/out/graphs/2020-03-16-deaths.png)
-* [out/graphs/recovered.png](https://github.com/ARU-Bioinf-ISE/covid19-graphs-bethsampher/blob/master/out/graphs/2020-03-16-recovered.png)
+* out/graphs/cases.png
+![Cases graph](https://github.com/ARU-Bioinf-ISE/covid19-graphs-bethsampher/blob/master/out/graphs/2020-03-16-cases.png)
+* out/graphs/deaths.png
+![Deaths graph](https://github.com/ARU-Bioinf-ISE/covid19-graphs-bethsampher/blob/master/out/graphs/2020-03-16-deaths.png)
+* out/graphs/recovered.png
+![Recovered graph](https://github.com/ARU-Bioinf-ISE/covid19-graphs-bethsampher/blob/master/out/graphs/2020-03-16-recovered.png)
 
 ## Advanced features
 
