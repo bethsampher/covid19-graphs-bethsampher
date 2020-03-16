@@ -12,18 +12,36 @@ pycodestyle should not produce any warnings.
 It is acceptable to have pylint warnings (for instance missing docstrings for unit tests)
  provided they are justified in README_PEP8.md..
 
-## `pycodestyle *.py` output
+## `pycodestyle -v .` output
 ```
-TODO include the output of pycodestyle *.py for your FINAL code here
-TODO Do not cheat - it will be checked
+directory .
+checking ./setup.py
+directory ./.pytest_cache
+directory ./.pytest_cache/v
+directory ./.pytest_cache/v/cache
+directory ./bin
+directory ./out
+directory ./out/graphs
+directory ./covid19_graphs
+checking ./covid19_graphs/command_line_script.py
+checking ./covid19_graphs/covid19_processing.py
+directory ./covid19_graphs/tests
+checking ./covid19_graphs/tests/test_covid19_processing.py
+checking ./covid19_graphs/tests/test_parse_command_line_args.py
+directory ./.github
+directory ./.github/workflows
+directory ./.ipynb_checkpoints
+directory ./covid19_graphs.egg-info
 ```
 
-## `pylint *.py` output
+## `pylint covid19_graphs` output
 ```
-TODO include the output of pycodestyle *.py for your FINAL code here
-TODO Do not cheat - it will be checked
+************* Module covid19_processing
+covid19_graphs/covid19_processing.py:99:8: C0103: Variable name "uk" doesn't conform to snake_case naming style (invalid-name)
+covid19_graphs/covid19_processing.py:131:15: W0703: Catching too general exception Exception (broad-except)
 ```
 
 ## justification for pylint warnings
 
-* TODO justify pylint warning
+uk is an appropriate variable name for data from the UK  
+Used Exception rather than anything more specific as there could be a number of different errors when processing data
