@@ -42,5 +42,6 @@ def main():
     c_process.store_data_for_csv()
     c_process.create_out_dir()
     c_process.write_csv_files()
+    c_process.remove_unrecognised_column()
     c_process.make_axes()
     c_process.write_png_files()

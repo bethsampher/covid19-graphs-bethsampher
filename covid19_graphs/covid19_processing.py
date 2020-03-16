@@ -148,6 +148,16 @@ class Covid19Processing():
         recovered_path = self.out_dir + '/recovered.csv'
         self.recovered_csv_data.to_csv(recovered_path)
 
+    def remove_unrecognised_column(self):
+        """Removes unrecognised data so it isn't
+        on the graphs"""
+        self.cases_csv_data = self.cases_csv_data.drop(
+            columns=['Unrecognised'])
+        self.deaths_csv_data = self.deaths_csv_data.drop(
+            columns=['Unrecognised'])
+        self.recovered_csv_data = self.recovered_csv_data.drop(
+            columns=['Unrecognised'])
+
     @staticmethod
     def set_labels(axes):
         """Sets axes labels for graphs"""
