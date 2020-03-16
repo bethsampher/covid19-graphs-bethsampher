@@ -1,4 +1,5 @@
 """module for Covid19Processing class"""
+from datetime import datetime as dt
 import os
 import sys
 from io import StringIO
@@ -41,6 +42,9 @@ class Covid19Processing():
         self.cases_csv_data = None
         self.deaths_csv_data = None
         self.recovered_csv_data = None
+        self.cases_axes = None
+        self.deaths_axes = None
+        self.recovered_axes = None
 
     def download_from_github(self):
         """Downloads the datasets from the COVID19 GitHub repo
@@ -144,3 +148,52 @@ class Covid19Processing():
         self.deaths_csv_data.to_csv(deaths_path)
         recovered_path = self.out_dir + '/recovered.csv'
         self.recovered_csv_data.to_csv(recovered_path)
+
+    def remove_unrecognised_column(self):
+        """Removes unrecognised data so it isn't
+        on the graphs"""
+        self.cases_csv_data = self.cases_csv_data.drop(
+            columns=['Unrecognised'])
+        self.deaths_csv_data = self.deaths_csv_data.drop(
+            columns=['Unrecognised'])
+        self.recovered_csv_data = self.recovered_csv_data.drop(
+            columns=['Unrecognised'])
+
+    @staticmethod
+    def set_labels(axes):
+        """Sets axes labels for graphs"""
+        axes.set_xlabel('Date')
+        axes.set_ylabel('Reported number')
+
+    def make_axes(self):
+        """Creates graphs from cases, deaths and
+        recovered data"""
+        self.cases_axes = self.cases_csv_data.plot(
+            legend=True, title='COVID-19 cases (data from John Hopkins CSSE)',
+            grid=True)
+        self.set_labels(self.cases_axes)
+        self.deaths_axes = self.deaths_csv_data.plot(
+            legend=True, title='COVID-19 deaths (data from John Hopkins CSSE)',
+            grid=True)
+        self.set_labels(self.deaths_axes)
+        self.recovered_axes = self.recovered_csv_data.plot(
+            legend=True,
+            title='COVID-19 recoveries (data from John Hopkins CSSE)',
+            grid=True)
+        self.set_labels(self.recovered_axes)
+
+    def create_graph_dir(self):
+        """Creates a graph dir in our_dir
+
+        For graphs to be put in"""
+        os.mkdir(self.out_dir + '/graphs')
+
+    def write_png_files(self):
+        """Saves graphs to png files, uses date in path"""
+        date = dt.today().strftime('%Y-%m-%d')
+        cases_path = f'{self.out_dir}/graphs/{date}-cases.png'
+        self.cases_axes.get_figure().savefig(cases_path)
+        deaths_path = f'{self.out_dir}/graphs/{date}-deaths.png'
+        self.deaths_axes.get_figure().savefig(deaths_path)
+        recovered_path = f'{self.out_dir}/graphs/{date}-recovered.png'
+        self.recovered_axes.get_figure().savefig(recovered_path)

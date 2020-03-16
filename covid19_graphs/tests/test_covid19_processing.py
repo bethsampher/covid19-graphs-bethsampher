@@ -119,3 +119,28 @@ def test_write_csv_files():
         mock_to_csv.assert_any_call('test_dir/cases.csv')
         mock_to_csv.assert_any_call('test_dir/deaths.csv')
         mock_to_csv.assert_any_call('test_dir/recovered.csv')
+
+
+def test_remove_unrecongnised_column():
+    """Tests remove_unrecognised_column"""
+    processing = Covid19Processing('test_dir')
+    processing.cases_csv_data = pd.DataFrame(
+        {'Unrecognised': ['data']})
+    processing.deaths_csv_data = pd.DataFrame(
+        {'Unrecognised': ['data'], 'Test': ['data']})
+    processing.recovered_csv_data = pd.DataFrame(
+        {'Test': ['data'], 'Unrecognised': ['data']})
+    processing.remove_unrecognised_column()
+    assert processing.cases_csv_data.empty
+    assert pd.DataFrame({'Test': ['data']}).equals(
+        processing.deaths_csv_data)
+    assert pd.DataFrame({'Test': ['data']}).equals(
+        processing.recovered_csv_data)
+
+
+def test_create_graph_dir():
+    """Tests create_graph_dir"""
+    processing = Covid19Processing('test_dir')
+    with patch('os.mkdir') as mock_mkdir:
+        processing.create_graph_dir()
+        mock_mkdir.assert_called_once_with('test_dir/graphs')

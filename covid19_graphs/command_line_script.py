@@ -17,6 +17,8 @@ def parse_command_line_args(test_override=None):
     parser = argparse.ArgumentParser(description=__doc__)
     help_ = 'directory for output files '
     parser.add_argument('out_dir', metavar='OUT_DIR', help=help_)
+    help_ = 'option to specify for graphs'
+    parser.add_argument('-g', '--graphs', action='store_true', help=help_)
     help_ = 'turn on debug message logging output'
     parser.add_argument('-d', '--debug', action='store_true', help=help_)
     if test_override is not None:
@@ -42,3 +44,8 @@ def main():
     c_process.store_data_for_csv()
     c_process.create_out_dir()
     c_process.write_csv_files()
+    if args.graphs:
+        c_process.remove_unrecognised_column()
+        c_process.make_axes()
+        c_process.create_graph_dir()
+        c_process.write_png_files()
