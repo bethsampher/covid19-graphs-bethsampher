@@ -2,8 +2,7 @@
 
 # A tool to download and plot Covid-19 disease outbreak data
 
-Please see [README_instructions.md](README_instructions.md)
-
+Uses data from [John Hopkins CSSE](https://github.com/CSSEGISandData/COVID-19/tree/master/csse_covid_19_data/csse_covid_19_time_series)
 
 ## Installing the `covid19_graphs` package (for developers)
 
@@ -20,7 +19,7 @@ covid19_graphs -h
 You should get an output like
 ```
 $ covid19_graphs -h
-usage: covid19_graphs [-h] [-d] OUT_DIR
+usage: covid19_graphs [-h] [-g] [-d] OUT_DIR
 
 tool to download and process COVID-19 data
 
@@ -29,5 +28,37 @@ positional arguments:
 
 optional arguments:
   -h, --help   show this help message and exit
+  -g, --graphs option to specify for graphs
   -d, --debug  turn on debug message logging output
 ```
+
+## Using the script
+
+covid19_graphs must be run with the name of an output directory to be created, OUT_DIR. Output files will be put in here.   
+If a directory with the same name already exists, the script will exit with an error message informing you of this.  
+The script will also exit with an error message if the data is not retrieved successfully from [John Hopkins CSSE](https://github.com/CSSEGISandData/COVID-19/tree/master/csse_covid_19_data/csse_covid_19_time_series), or if this data cannot be processed.    
+For help use the **-h** option.
+
+Other options that can be specified are: 
+* **--graphs, -g**  
+   Outputs png files of graphs from the data
+* **--debug, -d**  
+   For developers, logs output
+
+## Example output files
+
+Output CSVs produced by running the script on 16/03/20 (data for the 16th was not yet available when the script was run):  
+```
+$ covid19_graphs -g out
+```
+* cases
+* deaths
+* recovered  
+
+Output graphs (found in the graphs directory within the specified output directory):
+* cases
+* deaths
+* recovered  
+
+## Advanced features
+
