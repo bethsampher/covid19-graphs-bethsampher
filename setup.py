@@ -15,6 +15,7 @@ setup(name='covid19_graphs',
       scripts=['bin/covid19_graphs'],
       zip_safe=False,
       include_package_data=True,
-      install_requires=['pytest', 'requests', 'mock', 'pandas', 'pycountry_convert'],
+      install_requires=['pytest', 'requests', 'mock', 'pandas',
+                        'pycountry_convert'],
       python_requires='>=3.6',
       )
