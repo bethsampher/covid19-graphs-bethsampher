@@ -65,3 +65,6 @@ Output graphs (found in the graphs directory within the specified output directo
 
 ## Advanced features
 
+* Use of pandas
+* Use of mocking in tests
+* Error handling
