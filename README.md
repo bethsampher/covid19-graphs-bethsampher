@@ -107,4 +107,4 @@ For set_labels, make_axes and write_png_files, I took a more manual approach by 
 ```
 $ covid19_processing -g out
 ```
-I then opened the png files and checked the graphs look correct, which they do as can be seen in the images above.
+I then opened the png files and checked the graphs look correct, which they do, as can be seen in the images above.
