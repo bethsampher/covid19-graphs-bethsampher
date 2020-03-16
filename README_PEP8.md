@@ -40,8 +40,12 @@ directory ./covid19_graphs.egg-info
 covid19_graphs/covid19_processing.py:99:8: C0103: Variable name "uk" doesn't conform to snake_case naming style (invalid-name)
 covid19_graphs/covid19_processing.py:131:15: W0703: Catching too general exception Exception (broad-except)
 ```
+```
+$ pylint *.py
+Your code has been rated at 10.00/10 (previous run: 10.00/10, +0.00)
+```
 
-## justification for pylint warnings
+## Justification for pylint warnings
 
 uk is an appropriate variable name for data from the UK  
 Used Exception rather than anything more specific as there could be a number of different errors when processing data
