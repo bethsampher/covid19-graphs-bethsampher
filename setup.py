@@ -5,7 +5,7 @@ for a good intrdouction
 from setuptools import setup
 
 setup(name='covid19_graphs',
-      version='0.0.2',
+      version='0.0.3',
       description='tool to download and process COVID-19 data',
       url='',
       author='Beth Sampher',
