@@ -39,9 +39,6 @@ class Covid19Processing():
         self.cases_data = None
         self.deaths_data = None
         self.recovered_data = None
-        self.cases_csv_data = None
-        self.deaths_csv_data = None
-        self.recovered_csv_data = None
         self.cases_axes = None
         self.deaths_axes = None
         self.recovered_axes = None
@@ -122,15 +119,15 @@ class Covid19Processing():
         return filtered_data
 
     def store_data_for_csv(self):
-        """Stores filtered data for output CSV in
-        instance variables
+        """Updates instance variables with filtered
+        data for CSV files
 
         Exits with error message if data can't be
         processed properly"""
         try:
-            self.cases_csv_data = self.filter_data(self.cases_data)
-            self.deaths_csv_data = self.filter_data(self.deaths_data)
-            self.recovered_csv_data = self.filter_data(self.recovered_data)
+            self.cases_data = self.filter_data(self.cases_data)
+            self.deaths_data = self.filter_data(self.deaths_data)
+            self.recovered_data = self.filter_data(self.recovered_data)
         except Exception:
             sys.exit('Error! Data could not be processed')
 
@@ -143,20 +140,20 @@ class Covid19Processing():
     def write_csv_files(self):
         """Writes CSV files to out_dir"""
         cases_path = self.out_dir + '/cases.csv'
-        self.cases_csv_data.to_csv(cases_path)
+        self.cases_data.to_csv(cases_path)
         deaths_path = self.out_dir + '/deaths.csv'
-        self.deaths_csv_data.to_csv(deaths_path)
+        self.deaths_data.to_csv(deaths_path)
         recovered_path = self.out_dir + '/recovered.csv'
-        self.recovered_csv_data.to_csv(recovered_path)
+        self.recovered_data.to_csv(recovered_path)
 
     def remove_unrecognised_column(self):
         """Removes unrecognised data so it isn't
         on the graphs"""
-        self.cases_csv_data = self.cases_csv_data.drop(
+        self.cases_data = self.cases_data.drop(
             columns=['Unrecognised'])
-        self.deaths_csv_data = self.deaths_csv_data.drop(
+        self.deaths_data = self.deaths_data.drop(
             columns=['Unrecognised'])
-        self.recovered_csv_data = self.recovered_csv_data.drop(
+        self.recovered_data = self.recovered_data.drop(
             columns=['Unrecognised'])
 
     @staticmethod
@@ -168,15 +165,15 @@ class Covid19Processing():
     def make_axes(self):
         """Creates graphs from cases, deaths and
         recovered data"""
-        self.cases_axes = self.cases_csv_data.plot(
+        self.cases_axes = self.cases_data.plot(
             legend=True, title='COVID-19 cases (data from John Hopkins CSSE)',
             grid=True)
         self.set_labels(self.cases_axes)
-        self.deaths_axes = self.deaths_csv_data.plot(
+        self.deaths_axes = self.deaths_data.plot(
             legend=True, title='COVID-19 deaths (data from John Hopkins CSSE)',
             grid=True)
         self.set_labels(self.deaths_axes)
-        self.recovered_axes = self.recovered_csv_data.plot(
+        self.recovered_axes = self.recovered_data.plot(
             legend=True,
             title='COVID-19 recoveries (data from John Hopkins CSSE)',
             grid=True)

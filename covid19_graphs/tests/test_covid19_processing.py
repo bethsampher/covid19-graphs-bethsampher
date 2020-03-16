@@ -82,9 +82,9 @@ def test_store_data_for_csv():
         processing.deaths_data = 'Test data'
         processing.recovered_data = 'Test data'
         processing.store_data_for_csv()
-        assert processing.cases_csv_data == 'Test CSV data'
-        assert processing.deaths_csv_data == 'Test CSV data'
-        assert processing.recovered_csv_data == 'Test CSV data'
+        assert processing.cases_data == 'Test CSV data'
+        assert processing.deaths_data == 'Test CSV data'
+        assert processing.recovered_data == 'Test CSV data'
 
 
 def test_store_data_for_csv_fail():
@@ -112,9 +112,9 @@ def test_write_csv_files():
     """Tests write_csv_files"""
     processing = Covid19Processing('test_dir')
     with patch('pandas.DataFrame.to_csv') as mock_to_csv:
-        processing.cases_csv_data = pd.DataFrame(['test data'])
-        processing.deaths_csv_data = pd.DataFrame(['test data'])
-        processing.recovered_csv_data = pd.DataFrame(['test data'])
+        processing.cases_data = pd.DataFrame(['test data'])
+        processing.deaths_data = pd.DataFrame(['test data'])
+        processing.recovered_data = pd.DataFrame(['test data'])
         processing.write_csv_files()
         mock_to_csv.assert_any_call('test_dir/cases.csv')
         mock_to_csv.assert_any_call('test_dir/deaths.csv')
@@ -124,18 +124,18 @@ def test_write_csv_files():
 def test_remove_unrecongnised_column():
     """Tests remove_unrecognised_column"""
     processing = Covid19Processing('test_dir')
-    processing.cases_csv_data = pd.DataFrame(
+    processing.cases_data = pd.DataFrame(
         {'Unrecognised': ['data']})
-    processing.deaths_csv_data = pd.DataFrame(
+    processing.deaths_data = pd.DataFrame(
         {'Unrecognised': ['data'], 'Test': ['data']})
-    processing.recovered_csv_data = pd.DataFrame(
+    processing.recovered_data = pd.DataFrame(
         {'Test': ['data'], 'Unrecognised': ['data']})
     processing.remove_unrecognised_column()
-    assert processing.cases_csv_data.empty
+    assert processing.cases_data.empty
     assert pd.DataFrame({'Test': ['data']}).equals(
-        processing.deaths_csv_data)
+        processing.deaths_data)
     assert pd.DataFrame({'Test': ['data']}).equals(
-        processing.recovered_csv_data)
+        processing.recovered_data)
 
 
 def test_create_graph_dir():
