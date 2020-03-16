@@ -183,6 +183,9 @@ class Covid19Processing():
         self.set_labels(self.recovered_axes)
 
     def create_graph_dir(self):
+        """Creates a graph dir in our_dir
+
+        For graphs to be put in"""
         os.mkdir(self.out_dir + '/graphs')
 
     def write_png_files(self):
