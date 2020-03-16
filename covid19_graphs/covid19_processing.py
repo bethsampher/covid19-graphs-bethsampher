@@ -1,5 +1,5 @@
 """module for Covid19Processing class"""
-import datetime
+from datetime import datetime as dt
 import os
 import sys
 from io import StringIO
@@ -189,10 +189,11 @@ class Covid19Processing():
         os.mkdir(self.out_dir + '/graphs')
 
     def write_png_files(self):
-        """Saves graphs to png files"""
-        cases_path = self.out_dir + '/graphs/cases.png'
+        """Saves graphs to png files, uses date in path"""
+        date = dt.today().strftime('%Y-%m-%d')
+        cases_path = f'{self.out_dir}/graphs/{date}-cases.png'
         self.cases_axes.get_figure().savefig(cases_path)
-        deaths_path = self.out_dir + '/graphs/deaths.png'
+        deaths_path = f'{self.out_dir}/graphs/{date}-deaths.png'
         self.deaths_axes.get_figure().savefig(deaths_path)
-        recovered_path = self.out_dir + '/graphs/recovered.png'
+        recovered_path = f'{self.out_dir}/graphs/{date}-recovered.png'
         self.recovered_axes.get_figure().savefig(recovered_path)
